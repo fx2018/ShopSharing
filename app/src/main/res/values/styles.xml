@@ -1,0 +1,15 @@
+<resources>
+    <style name="Theme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="radioStyle">
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/main_text_color</item>
+    </style>
+
+</resources>
