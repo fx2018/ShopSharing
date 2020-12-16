@@ -1,5 +1,4 @@
-# android-multiple-infowindows
-用marker展示多infowindow的效果
+# ShopSharing
 
 本工程为基于高德地图Android SDK进行封装，用marker来实现同时显示多个infowindow的效果。
 
