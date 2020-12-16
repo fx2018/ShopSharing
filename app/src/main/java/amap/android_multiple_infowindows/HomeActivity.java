@@ -3,10 +3,10 @@ package amap.android_multiple_infowindows;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -17,14 +17,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
-
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.animation.Animation;
+import com.amap.api.maps.model.animation.RotateAnimation;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,27 +49,9 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationClientOption.AMapLocationMode;
-import com.amap.api.location.AMapLocationClientOption.AMapLocationProtocol;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.model.LatLngBounds;
-import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.animation.Animation;
-import com.amap.api.maps.model.animation.RotateAnimation;
-import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.poisearch.PoiResult;
-import com.amap.api.services.poisearch.PoiSearch;
-
 import overlay.PoiOverlay;
 
-
-public class MainActivity extends AppCompatActivity
+public class HomeActivity extends AppCompatActivity
         implements
         AMapLocationListener, LocationSource, AMap.OnMapClickListener, PoiSearch.OnPoiSearchListener {
     private AMap aMap;
@@ -82,7 +76,7 @@ public class MainActivity extends AppCompatActivity
     public AMapLocation currentLocation = null;
 
     // 中心点marker
-    ViewPoiOverlay poiOverlay;
+    HomeActivity.ViewPoiOverlay poiOverlay;
     private Marker centerMarker;
     private BitmapDescriptor ICON_YELLOW = BitmapDescriptorFactory
             .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW);
@@ -96,7 +90,7 @@ public class MainActivity extends AppCompatActivity
     public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
     public static final String URL_getShopInfo = URL + "getShopInfo";
 
-    public ShopInfo[] shopinfo;
+    public HomeActivity.ShopInfo[] shopinfo;
     // 当前的坐标点集合，主要用于进行地图的可视区域的缩放
     LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
 
@@ -143,7 +137,7 @@ public class MainActivity extends AppCompatActivity
         // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
         //启动定位
         aMap = mapView.getMap();
-        aMap.setLocationSource(MainActivity.this);
+        aMap.setLocationSource(HomeActivity.this);
         aMap.setMyLocationEnabled(true);
         aMap.getUiSettings().setMyLocationButtonEnabled(true);
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
@@ -160,10 +154,10 @@ public class MainActivity extends AppCompatActivity
         //Mine Head Click
         //textview_mine.setOnClickListener(new MineClickListener());
 
-        aMap.setOnMapClickListener(MainActivity.this);
+        aMap.setOnMapClickListener(HomeActivity.this);
         markerOption = new MarkerOptions().draggable(true);
 
-        new Thread(new customViewButton()).start();
+        //new Thread(new MainActivity.customViewButton()).start();
 
         getInfoByDB();
         //showDataOnMap("sad");
@@ -194,15 +188,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public ShopInfo[] analyzeData(String retVal)
+    public HomeActivity.ShopInfo[] analyzeData(String retVal)
     {
         String[] strArr = {};
         strArr = retVal.split(";");
-        ShopInfo[] si = new ShopInfo[strArr.length];
+        HomeActivity.ShopInfo[] si = new HomeActivity.ShopInfo[strArr.length];
 
         for(int i=0;i< strArr.length;i++) {
             String[] strArrEver = strArr[i].split(",");
-            si[i]=new ShopInfo();
+            si[i]= new HomeActivity.ShopInfo();
             if(strArrEver[0].isEmpty() || strArrEver[0]=="null") {
                 continue;
             }
@@ -281,7 +275,7 @@ public class MainActivity extends AppCompatActivity
     private void ShowAllShop(String shopInfo) {
         String getShopInfoUrlStr = URL_getShopInfo;
         //TextView tvResult = null;
-        new MyAsyncTask(shopInfo).execute(getShopInfoUrlStr);
+        new HomeActivity.MyAsyncTask(shopInfo).execute(getShopInfoUrlStr);
     }
 
 
@@ -323,7 +317,7 @@ public class MainActivity extends AppCompatActivity
         bundle.putString("shopDesc", shopDescp);
         bundle.putString("link", "http://player.bilibili.com/player.html?aid=542806233&bvid=BV1Xi4y1L76s&cid=257770318");
 
-        Toast.makeText(MainActivity.this, shopDescp, Toast.LENGTH_SHORT).show();
+        Toast.makeText(HomeActivity.this, shopDescp, Toast.LENGTH_SHORT).show();
         /*把bundle对象assign给Intent*/
         intent.putExtras(bundle);
 
@@ -353,12 +347,12 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void run() {
             View view = null;
-            view = View.inflate(MainActivity.this, R.layout.custom_view, null);
+            view = View.inflate(HomeActivity.this, R.layout.custom_view, null);
             TextView txv = (TextView) view.findViewById(R.id.title1);
             txv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, "customViewButton", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "customViewButton", Toast.LENGTH_SHORT).show();
 
 
                 }
@@ -453,7 +447,7 @@ public class MainActivity extends AppCompatActivity
             //设置定位监听
             mlocationClient.setLocationListener(this);
             //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-            mLocationOption.setLocationMode(AMapLocationMode.Hight_Accuracy);
+            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
             //设置定位间隔,单位毫秒,默认为2000ms
             mLocationOption.setInterval(2000);
             //设置定位参数
@@ -481,15 +475,15 @@ public class MainActivity extends AppCompatActivity
                 List<PoiItem> poiItems = poiResult.getPois();
                 if (poiItems != null && poiItems.size() > 0) {
                     aMap.clear();// 清理之前的图标
-                    poiOverlay = new ViewPoiOverlay(aMap, poiItems);
+                    poiOverlay = new HomeActivity.ViewPoiOverlay(aMap, poiItems);
                     poiOverlay.removeFromMap();
                     poiOverlay.addToMap();
                     poiOverlay.zoomToSpan();
                 } else {
-                    Toast.makeText(MainActivity.this, "无搜索结果", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "无搜索结果", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(MainActivity.this, "无搜索结果", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "无搜索结果", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -528,7 +522,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected BitmapDescriptor getBitmapDescriptor(int index) {
             View view = null;
-            view = View.inflate(MainActivity.this, R.layout.custom_view, null);
+            view = View.inflate(HomeActivity.this, R.layout.custom_view, null);
             TextView textView = ((TextView) view.findViewById(R.id.title1));
             textView.setText(getTitle(index));
 
@@ -584,7 +578,7 @@ public class MainActivity extends AppCompatActivity
 
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    Toast.makeText(MainActivity.this, "onMarkerClick", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "onMarkerClick", Toast.LENGTH_SHORT).show();
                     MarkerOptions markerOptions;
                     String shopDesc;
                     markerOptions = marker.getOptions();
@@ -603,4 +597,3 @@ public class MainActivity extends AppCompatActivity
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,13));
     }
 }
-

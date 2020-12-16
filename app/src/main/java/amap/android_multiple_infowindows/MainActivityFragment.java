@@ -17,41 +17,37 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class MainActivityFragment extends FragmentActivity implements OnClickListener {
-    /*
+
     // 底部菜单4个Linearlayout
     private LinearLayout ll_home;
-    private LinearLayout ll_address;
-    private LinearLayout ll_friend;
-    private LinearLayout ll_setting;
+    private LinearLayout ll_friends;
+    private LinearLayout ll_found;
+    private LinearLayout ll_mine;
 
     // 底部菜单4个ImageView
     private ImageView iv_home;
-    private ImageView iv_address;
-    private ImageView iv_friend;
-    private ImageView iv_setting;
+    private ImageView iv_friends;
+    private ImageView iv_found;
+    private ImageView iv_mine;
 
     // 底部菜单4个菜单标题
     private TextView tv_home;
-    private TextView tv_address;
-    private TextView tv_friend;
-    private TextView tv_setting;
-    */
+    private TextView tv_friends;
+    private TextView tv_found;
+    private TextView tv_mine;
+
 
     // 4个Fragment
     private Fragment homeFragment;
-    private Fragment addressFragment;
-    private Fragment friendFragment;
-    private Fragment settingFragment;
+    private Fragment friendsFragment;
+    private Fragment foundFragment;
+    private Fragment mineFragment;
 
-    private RadioButton ll_map;
-    private RadioButton ll_friend;
-    private RadioButton ll_find;
-    private RadioButton ll_mine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_fragment);
 
         // 初始化控件
         initView();
@@ -79,29 +75,29 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
                 }
                 break;
             case 1:
-                if (addressFragment == null) {
-                    //addressFragment = new AddressFragment();
-                    transaction.add(R.id.fl_content, addressFragment);
+                if (friendsFragment == null) {
+                    friendsFragment = new FriendsFragment();
+                    transaction.add(R.id.fl_content, friendsFragment);
                 } else {
-                    transaction.show(addressFragment);
+                    transaction.show(friendsFragment);
                 }
 
                 break;
             case 2:
-                if (friendFragment == null) {
-                    //friendFragment = new FriendFragment();
-                    transaction.add(R.id.fl_content, friendFragment);
+                if (foundFragment == null) {
+                    foundFragment = new FoundFragment();
+                    transaction.add(R.id.fl_content, foundFragment);
                 } else {
-                    transaction.show(friendFragment);
+                    transaction.show(foundFragment);
                 }
 
                 break;
             case 3:
-                if (settingFragment == null) {
-                    //settingFragment = new SettingFragment();
-                    transaction.add(R.id.fl_content, settingFragment);
+                if (mineFragment == null) {
+                    mineFragment = new MineFragment();
+                    transaction.add(R.id.fl_content, mineFragment);
                 } else {
-                    transaction.show(settingFragment);
+                    transaction.show(mineFragment);
                 }
 
                 break;
@@ -120,52 +116,48 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
         if (homeFragment != null) {
             transaction.hide(homeFragment);
         }
-        if (addressFragment != null) {
-            transaction.hide(addressFragment);
+        if (friendsFragment != null) {
+            transaction.hide(friendsFragment);
         }
-        if (friendFragment != null) {
-            transaction.hide(friendFragment);
+        if (foundFragment != null) {
+            transaction.hide(foundFragment);
         }
-        if (settingFragment != null) {
-            transaction.hide(settingFragment);
+        if (mineFragment != null) {
+            transaction.hide(mineFragment);
         }
 
     }
 
     private void initEvent() {
         // 设置按钮监听
-        ll_map.setOnClickListener(this);
-        ll_friend.setOnClickListener(this);
-        ll_find.setOnClickListener(this);
+        ll_home.setOnClickListener(this);
+        ll_friends.setOnClickListener(this);
+        ll_found.setOnClickListener(this);
         ll_mine.setOnClickListener(this);
 
     }
 
     private void initView() {
 
-        /*
+
         // 底部菜单4个Linearlayout
-        this.ll_home = (RadioButton) findViewById(R.id.radio_map);
-        this.ll_address = (LinearLayout) findViewById(R.id.radio_friend);
-        this.ll_friend = (LinearLayout) findViewById(R.id.radio_find);
-        this.ll_setting = (LinearLayout) findViewById(R.id.radio_mine);
 
         // 底部菜单4个ImageView
         this.iv_home = (ImageView) findViewById(R.id.iv_home);
-        this.iv_address = (ImageView) findViewById(R.id.iv_address);
-        this.iv_friend = (ImageView) findViewById(R.id.iv_friend);
-        this.iv_setting = (ImageView) findViewById(R.id.iv_setting);
+        this.iv_friends = (ImageView) findViewById(R.id.iv_friends);
+        this.iv_found = (ImageView) findViewById(R.id.iv_found);
+        this.iv_mine = (ImageView) findViewById(R.id.iv_mine);
 
         // 底部菜单4个菜单标题
         this.tv_home = (TextView) findViewById(R.id.tv_home);
-        this.tv_address = (TextView) findViewById(R.id.tv_address);
-        this.tv_friend = (TextView) findViewById(R.id.tv_friend);
-        this.tv_setting = (TextView) findViewById(R.id.tv_setting);
-        */
-        this.ll_map = (RadioButton) findViewById(R.id.radio_map);;
-        this.ll_friend = (RadioButton) findViewById(R.id.radio_friend);;
-        this.ll_find = (RadioButton) findViewById(R.id.radio_find);;
-        this.ll_mine = (RadioButton) findViewById(R.id.radio_mine);;
+        this.tv_friends = (TextView) findViewById(R.id.tv_friends);
+        this.tv_found = (TextView) findViewById(R.id.tv_found);
+        this.tv_mine = (TextView) findViewById(R.id.tv_mine);
+
+        this.ll_home = (LinearLayout) findViewById(R.id.ll_home);;
+        this.ll_friends = (LinearLayout) findViewById(R.id.ll_friends);;
+        this.ll_found = (LinearLayout) findViewById(R.id.ll_found);;
+        this.ll_mine = (LinearLayout) findViewById(R.id.ll_mine);;
     }
 
     @Override
@@ -175,22 +167,22 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
         restartBotton();
         // ImageView和TetxView置为绿色，页面随之跳转
         switch (v.getId()) {
-            case R.id.radio_map:
+            case R.id.ll_home:
                 //iv_home.setImageResource(R.drawable.tab_weixin_pressed);
                 //tv_home.setTextColor(0xff1B940A);
                 initFragment(0);
                 break;
-            case R.id.radio_friend:
+            case R.id.ll_friends:
                 //iv_address.setImageResource(R.drawable.tab_address_pressed);
                 //tv_address.setTextColor(0xff1B940A);
                 initFragment(1);
                 break;
-            case R.id.radio_find:
+            case R.id.ll_found:
                 //iv_friend.setImageResource(R.drawable.tab_find_frd_pressed);
                 //tv_friend.setTextColor(0xff1B940A);
                 initFragment(2);
                 break;
-            case R.id.radio_mine:
+            case R.id.ll_mine:
                 //iv_setting.setImageResource(R.drawable.tab_find_frd_pressed);
                 //tv_setting.setTextColor(0xff1B940A);
                 initFragment(3);
@@ -209,13 +201,14 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
         iv_address.setImageResource(R.drawable.tab_address_normal);
         iv_friend.setImageResource(R.drawable.tab_find_frd_normal);
         iv_setting.setImageResource(R.drawable.tab_settings_normal);
+
         // TextView置为白色
         tv_home.setTextColor(0xffffffff);
-        tv_address.setTextColor(0xffffffff);
-        tv_friend.setTextColor(0xffffffff);
-        tv_setting.setTextColor(0xffffffff);
+        tv_friends.setTextColor(0xffffffff);
+        tv_found.setTextColor(0xffffffff);
+        tv_mine.setTextColor(0xffffffff);
+ */
 
-         */
     }
 
 }
