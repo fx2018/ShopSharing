@@ -24,27 +24,22 @@
         android:icon="@mipmap/pp"
         android:supportsRtl="true"
         android:theme="@style/Theme.Splash">
-        <activity android:name=".HomeActivity"></activity>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="0099469045f5ff8a4b908838adc87824" /> <!-- 定位需要的服务 适配Android Q需要加上android:foregroundServiceType="location" -->
+        <service android:name="com.amap.api.location.APSService" />
         <activity android:name=".MainActivityFragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MyShops" />
         <activity android:name=".ShopDetails" />
         <activity android:name=".AddShop" />
-
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="0099469045f5ff8a4b908838adc87824" /> <!-- 定位需要的服务 适配Android Q需要加上android:foregroundServiceType="location" -->
-        <service android:name="com.amap.api.location.APSService" />
-
         <activity android:name=".RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.CALL" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
