@@ -26,7 +26,7 @@
         android:theme="@style/Theme.Splash">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="0099469045f5ff8a4b908838adc87824" /> <!-- 定位需要的服务 适配Android Q需要加上android:foregroundServiceType="location" -->
+            android:value="f849ef3024992548643b8aadbeb261ec" /> <!-- 定位需要的服务 适配Android Q需要加上android:foregroundServiceType="location" -->
         <service android:name="com.amap.api.location.APSService" />
         <activity android:name=".MainActivityFragment">
             <intent-filter>

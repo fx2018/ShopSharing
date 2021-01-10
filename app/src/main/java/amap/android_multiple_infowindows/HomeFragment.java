@@ -55,8 +55,9 @@ import overlay.PoiOverlay;
 
 public class HomeFragment extends Fragment implements
         AMapLocationListener, LocationSource, AMap.OnMapClickListener , PoiSearch.OnPoiSearchListener{
-    public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
-    public static final String URL_getShopInfo = URL + "getShopInfo";
+    //public static final String URL = "http://192.168.0.19:35001/";
+    public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
+    public static final String URL_getShopInfo = URL + "getShopData.aspx";
     private AMap aMap;
     private MapView mapView;
     public View m_view;
@@ -99,6 +100,7 @@ public class HomeFragment extends Fragment implements
         aMap.setLocationSource(this);
         aMap.setMyLocationEnabled(true);
         aMap.getUiSettings().setMyLocationButtonEnabled(true);
+        aMap.setOnMapClickListener(this);
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
         getInfoByDB();
         return m_view;
@@ -112,7 +114,9 @@ public class HomeFragment extends Fragment implements
         centerLatLng = latLng;
         addCenterMarker(centerLatLng);
 
-        System.out.println("center point" + centerLatLng.latitude+ "-----" + centerLatLng.longitude);
+        //only trans data, not go activity
+        transDataToRegNewShop();
+        //System.out.println("center point" + centerLatLng.latitude+ "-----" + centerLatLng.longitude);
         //drawCircle(centerLatLng);
 
     }
@@ -288,6 +292,28 @@ public class HomeFragment extends Fragment implements
         return si;
     }
 
+    /*
+        public ShopInfo[] analyzeData(String retVal)
+    {
+        String[] strArr = {};
+        strArr = retVal.split(";");
+        ShopInfo[] si = new ShopInfo[strArr.length];
+
+        for(int i=0;i< strArr.length;i++) {
+            String[] strArrEver = strArr[i].split(",");
+            si[i]= new ShopInfo();
+            if(strArrEver[0].isEmpty() || strArrEver[0]=="null") {
+                continue;
+            }
+            si[i].companyName = strArrEver[0];
+            si[i].locationX = strArrEver[1];
+            si[i].locationY = strArrEver[2];
+            si[i].shopDesc = strArrEver[3];
+        }
+
+        return si;
+    }
+     */
 
     /*
     =========================================HTTP method=========================================
@@ -432,7 +458,7 @@ public class HomeFragment extends Fragment implements
         Bundle bundle = new Bundle();
         /*字符、字符串、布尔、字节数组、浮点数等等，都可以传*/
         bundle.putString("shopDesc", shopDescp);
-        bundle.putString("link", "http://player.bilibili.com/player.html?aid=542806233&bvid=BV1Xi4y1L76s&cid=257770318");
+        //bundle.putString("link", "http://player.bilibili.com/player.html?aid=542806233&bvid=BV1Xi4y1L76s&cid=257770318");
 
         Toast.makeText(m_view.getContext(), shopDescp, Toast.LENGTH_SHORT).show();
         /*把bundle对象assign给Intent*/
@@ -441,5 +467,25 @@ public class HomeFragment extends Fragment implements
         startActivity(intent);
     }
 
+    private void transDataToRegNewShop()
+    {
+        Intent intent = new Intent();
+        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.AddShop");
+        //param1:Activity所在应用的包名
+        //param2:Activity的包名+类名
+        intent.setComponent(cn);
 
+        /* 通过Bundle对象存储需要传递的数据 */
+        Bundle bundle = new Bundle();
+        if(centerLatLng != null) {
+            /*字符、字符串、布尔、字节数组、浮点数等等，都可以传*/
+            bundle.putDouble("locationX", centerLatLng.latitude);
+            bundle.putDouble("locationY", centerLatLng.longitude);
+
+            /*把bundle对象assign给Intent*/
+            intent.putExtras(bundle);
+        }
+
+        //startActivity(intent);
+    }
 }

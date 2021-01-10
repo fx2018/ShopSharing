@@ -33,9 +33,11 @@ public class AddShop extends AppCompatActivity {
     private EditText etDetails;
     private TextView tv1;
 
-    public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
+    //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
     //public static final String URL = "http://192.168.31.158:8080/ServLetTest/";
-    public static final String URL_ShopRegister = URL + "shopRegisterServlet";
+    //public static final String URL_ShopRegister = URL + "shopRegisterServlet";
+    public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
+    public static final String URL_recShopData = URL + "recShopData.aspx";
     //public static final String URL_Login = URL + "loginServlet";
 
     public class MyAsyncTask extends AsyncTask<String, Integer, String> {
@@ -85,12 +87,12 @@ public class AddShop extends AppCompatActivity {
             tv.setText(s);
             if(s.contains("code:200"))
             {
-                Intent intent = new Intent();
-                ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MainActivity");
+                //Intent intent = new Intent();
+                //ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MainActivity");
                 //param1:Activity所在应用的包名
                 //param2:Activity的包名+类名
-                intent.setComponent(cn);
-                startActivity(intent);
+                //intent.setComponent(cn);
+                //startActivity(intent);
             }
         }
     }
@@ -131,7 +133,7 @@ public class AddShop extends AppCompatActivity {
     }
 */
     private void shopRegister(String shopName, String type, String locationX, String locationY, String details) {
-        String shopRegisterUrlStr = URL_ShopRegister + "?shopname=" + shopName + "&type=" + type + "&locationX=" + locationX + "&locationY=" + locationY + "&details=" + details;
+        String shopRegisterUrlStr = URL_recShopData + "?companyName=" + shopName + "&type=" + type + "&locationX=" + locationX + "&locationY=" + locationY + "&shopDesc=" + details;
         new AddShop.MyAsyncTask(tv1).execute(shopRegisterUrlStr);
     }
 

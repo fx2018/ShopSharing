@@ -149,10 +149,10 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
         this.iv_mine = (ImageView) findViewById(R.id.iv_mine);
 
         // 底部菜单4个菜单标题
-        this.tv_home = (TextView) findViewById(R.id.tv_home);
-        this.tv_friends = (TextView) findViewById(R.id.tv_friends);
-        this.tv_found = (TextView) findViewById(R.id.tv_found);
-        this.tv_mine = (TextView) findViewById(R.id.tv_mine);
+        //this.tv_home = (TextView) findViewById(R.id.tv_home);
+        //this.tv_friends = (TextView) findViewById(R.id.tv_friends);
+        //this.tv_found = (TextView) findViewById(R.id.tv_found);
+        //this.tv_mine = (TextView) findViewById(R.id.tv_mine);
 
         this.ll_home = (LinearLayout) findViewById(R.id.ll_home);;
         this.ll_friends = (LinearLayout) findViewById(R.id.ll_friends);;

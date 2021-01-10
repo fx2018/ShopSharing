@@ -30,16 +30,10 @@ public class ShopDetails extends AppCompatActivity {
 
         /*获取Bundle中的数据，注意类型和key*/
         String shopDescp = bundle.getString("shopDesc");
-        String shopvideolink = bundle.getString("link");
 
-        /*if(shopDescp!="")
+        if(shopDescp!="")
         {
             uri = shopDescp.toString();
-        }*/
-
-        if(shopvideolink != "")
-        {
-            uri = shopvideolink.toString();
         }
 
         webView = (WebView)this.findViewById(R.id.webview);
