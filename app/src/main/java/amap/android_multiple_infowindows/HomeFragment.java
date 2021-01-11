@@ -109,8 +109,8 @@ public class HomeFragment extends Fragment implements
 
     @Override
     public void onMapClick(LatLng latLng) {
-        markerOption.icon(ICON_YELLOW);
-        markerOption.title(shopName);
+        //markerOption.icon(ICON_YELLOW);
+        //markerOption.title(shopName);
         centerLatLng = latLng;
         addCenterMarker(centerLatLng);
 

@@ -28,10 +28,11 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etPassword;
     private TextView tvResult;
 
-    public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
+    //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
     //public static final String URL = "http://192.168.31.158:8080/ServLetTest/";
-    public static final String URL_Register = URL + "registerServlet";
-    public static final String URL_Login = URL + "loginServlet";
+    public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
+    public static final String URL_Register = URL + "userRegister.aspx";
+    public static final String URL_Login = URL + "userLogin.aspx";
 
     /**
 
@@ -97,14 +98,14 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void register(String account, String password) {
-        String registerUrlStr = URL_Register + "?account=" + account + "&password=" + password;
+    private void register(String username, String password) {
+        String registerUrlStr = URL_Register + "?username=" + username + "&password=" + password;
         //TextView tvResult = null;
         new MyAsyncTask(tvResult).execute(registerUrlStr);
     }
 
-    private void login(String account, String password) {
-        String loginUrlStr = URL_Login + "?account=" + account + "&password=" + password;
+    private void login(String username, String password) {
+        String loginUrlStr = URL_Login + "?username=" + username + "&password=" + password;
         //TextView tvResult = null;
         new MyAsyncTask(tvResult).execute(loginUrlStr);
     }
