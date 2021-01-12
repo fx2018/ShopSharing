@@ -32,6 +32,7 @@ public class MineFragment extends Fragment {
             RegisterLoginLayoutAndActivity(inflater, container, savedInstanceState);
         }
         ShowMineLayoutAndActivity(inflater, container, savedInstanceState);
+
         return m_view;
     }
 

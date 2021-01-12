@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import amap.android_multiple_infowindows.MD5Tool;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -103,13 +104,17 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void register(String account, String password) {
-        String registerUrlStr = URL_Register + "?username=" + account + "&password=" + password;
+        MD5Tool mdt= new MD5Tool();
+        String encode_pwd = mdt.getMD5Str(password).toString();
+        String registerUrlStr = URL_Register + "?username=" + account + "&password=" + encode_pwd;
         //TextView tvResult = null;
         new MyAsyncTask(tvResult).execute(registerUrlStr);
     }
 
     private void login(String account, String password) {
-        String loginUrlStr = URL_Login + "?username=" + account + "&password=" + password;
+        MD5Tool mdt= new MD5Tool();
+        String encode_pwd = mdt.getMD5Str(password).toString();
+        String loginUrlStr = URL_Login + "?username=" + account + "&password=" + encode_pwd;
         //TextView tvResult = null;
         new MyAsyncTask(tvResult).execute(loginUrlStr);
     }
