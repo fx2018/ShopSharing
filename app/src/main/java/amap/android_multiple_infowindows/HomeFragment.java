@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment implements
     private MarkerOptions markerOption = null;
     private Marker centerMarker;
     // 中心点坐标
-    private LatLng centerLatLng = null;
+    public static LatLng centerLatLng = null;
     LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
 
     ViewPoiOverlay poiOverlay;
@@ -109,14 +109,16 @@ public class HomeFragment extends Fragment implements
 
     @Override
     public void onMapClick(LatLng latLng) {
-        //markerOption.icon(ICON_YELLOW);
-        //markerOption.title(shopName);
+        markerOption = new MarkerOptions();
+        markerOption.icon(ICON_YELLOW);
+        markerOption.title(shopName);
         centerLatLng = latLng;
         addCenterMarker(centerLatLng);
 
+        System.out.println("center point" + centerLatLng.latitude+ "-----" + centerLatLng.longitude);
         //only trans data, not go activity
         transDataToRegNewShop();
-        //System.out.println("center point" + centerLatLng.latitude+ "-----" + centerLatLng.longitude);
+
         //drawCircle(centerLatLng);
 
     }
@@ -487,5 +489,10 @@ public class HomeFragment extends Fragment implements
         }
 
         //startActivity(intent);
+    }
+
+    public static LatLng getLocation()
+    {
+        return centerLatLng;
     }
 }

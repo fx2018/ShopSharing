@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,38 +32,67 @@
             android:layout_toRightOf="@id/iv_avatar">
 
             <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名："
+                android:textColor="#353535"
+                android:textSize="16sp"/>
+            <TextView
                 android:id="@+id/yonghuxingming"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="XXXX"
                 android:textColor="#353535"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/tv_fxid"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:text="账号:"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/dengruyonghu"
+            android:text="SSSSSS"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_avatar"
+
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"/>
 
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/re_xiangce"
+        android:id="@+id/re_shop"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:clickable="true"
         android:paddingLeft="12dp">
         <ImageView
-            android:id="@+id/iv_xiangce"
+            android:id="@+id/iv_shop"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:src="@drawable/shop"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_xiangce"
-            android:text="Shop Manage"
+            android:layout_toRightOf="@id/iv_shop"
+            android:text="店铺管理"
             android:textColor="#353535"
             android:textSize="16sp" />
         <View
@@ -82,49 +110,78 @@
         android:clickable="true"
         android:paddingLeft="12dp">
         <ImageView
-            android:id="@+id/iv_shoucang"
+            android:id="@+id/iv_aboutwe"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:src="@drawable/about"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_shoucang"
+            android:layout_toRightOf="@id/iv_aboutwe"
+            android:text="关于我们"
             android:textColor="#353535"
-            android:textSize="16sp"
-            tools:text="Preference" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
-
     <RelativeLayout
-        android:layout_marginTop="10dp"
-        android:id="@+id/tuichu"
+        android:layout_marginTop="20dp"
+        android:id="@+id/re_help"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:clickable="true"
         android:paddingLeft="12dp">
         <ImageView
-            android:id="@+id/iv_setting"
+            android:id="@+id/iv_help"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:src="@drawable/help2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/iv_help"
+            android:text="帮助与反馈"
+            android:textColor="#353535"
+            android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="12dp"
+            android:background="#dadada" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/re_quit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:paddingLeft="12dp">
+        <ImageView
+            android:id="@+id/iv_quit"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:src="@drawable/akf" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_setting"
-            android:text="LogOut"
+            android:layout_toRightOf="@id/iv_quit"
+            android:text="退出登入"
             android:textColor="#353535"
             android:textSize="16sp" />
 

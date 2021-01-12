@@ -119,12 +119,16 @@ public class FoundFragment extends Fragment{
         m_view = inflater.inflate(R.layout.activity_add_shop, container, false);
         new Thread(new ListenAddShopButton()).start();
 
+
         /*获取Intent中的Bundle对象*/
         //Bundle bundle = getIntent().getExtras();
 
         /*获取Bundle中的数据，注意类型和key*/
         //double locationX = bundle.getDouble("locationX");
         //double locationY = bundle.getDouble("locationY");
+
+        double locationX = HomeFragment.getLocation().latitude;
+        double locationY = HomeFragment.getLocation().longitude;
 
         etShopName = (EditText) m_view.findViewById(R.id.editText);
         etType = (EditText) m_view.findViewById(R.id.editText4);
@@ -133,8 +137,8 @@ public class FoundFragment extends Fragment{
         etDetails = (EditText) m_view.findViewById(R.id.editText5);
         tv1 = (TextView) m_view.findViewById(R.id.textView7);
 
-        //etLocationX.setText(Double.toString(locationX));
-        //etLocationY.setText(Double.toString(locationY));
+        etLocationX.setText(Double.toString(locationX));
+        etLocationY.setText(Double.toString(locationY));
         return m_view;
 
     }

@@ -29,7 +29,6 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView tvResult;
 
     //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
-    //public static final String URL = "http://192.168.31.158:8080/ServLetTest/";
     public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
     public static final String URL_Register = URL + "userRegister.aspx";
     public static final String URL_Login = URL + "userLogin.aspx";
@@ -86,26 +85,31 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             tv.setText(s);
-            if(s.contains("code:200"))
+            if(s.contains("OK"))
             {
-                Intent intent = new Intent();
+                /*Intent intent = new Intent();
                 ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MainActivity");
                 //param1:Activity所在应用的包名
                  //param2:Activity的包名+类名
                 intent.setComponent(cn);
-                startActivity(intent);
+                startActivity(intent);*/
+                Toast.makeText( RegisterActivity.this, "RegisterActivity login==OK", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.putExtra("username",etAccount.getText().toString());
+                RegisterActivity.this.setResult(RESULT_OK,intent);
+                finish();
             }
         }
     }
 
-    private void register(String username, String password) {
-        String registerUrlStr = URL_Register + "?username=" + username + "&password=" + password;
+    private void register(String account, String password) {
+        String registerUrlStr = URL_Register + "?username=" + account + "&password=" + password;
         //TextView tvResult = null;
         new MyAsyncTask(tvResult).execute(registerUrlStr);
     }
 
-    private void login(String username, String password) {
-        String loginUrlStr = URL_Login + "?username=" + username + "&password=" + password;
+    private void login(String account, String password) {
+        String loginUrlStr = URL_Login + "?username=" + account + "&password=" + password;
         //TextView tvResult = null;
         new MyAsyncTask(tvResult).execute(loginUrlStr);
     }
