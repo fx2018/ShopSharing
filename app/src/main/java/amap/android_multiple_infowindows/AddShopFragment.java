@@ -1,31 +1,46 @@
 package amap.android_multiple_infowindows;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.content.ComponentName;
+        import android.content.Intent;
+        import android.os.AsyncTask;
+        import android.os.Bundle;
+        import android.support.annotation.Nullable;
+        import android.support.v4.app.Fragment;
+        import android.text.TextUtils;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.RadioButton;
+        import android.widget.RadioGroup;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+        import com.amap.api.location.AMapLocation;
+        import com.amap.api.location.AMapLocationListener;
+        import com.amap.api.maps.AMap;
+        import com.amap.api.maps.LocationSource;
+        import com.amap.api.maps.MapView;
+        import com.amap.api.maps.model.LatLng;
+        import com.amap.api.services.core.PoiItem;
+        import com.amap.api.services.poisearch.PoiResult;
+        import com.amap.api.services.poisearch.PoiSearch;
 
-public class AddShop extends AppCompatActivity {
+        import java.io.BufferedReader;
+        import java.io.IOException;
+        import java.io.InputStream;
+        import java.io.InputStreamReader;
+        import java.net.HttpURLConnection;
+        import java.net.MalformedURLException;
+        import java.net.URL;
 
+
+
+public class AddShopFragment extends Fragment{
+
+    public View m_view;
     private EditText etShopName;
     private EditText etType;
     private EditText etLocationX;
@@ -88,7 +103,7 @@ public class AddShop extends AppCompatActivity {
             if(s.contains("code:200"))
             {
                 //Intent intent = new Intent();
-                //ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MainActivity");
+                //ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MainActivity_bak");
                 //param1:Activity所在应用的包名
                 //param2:Activity的包名+类名
                 //intent.setComponent(cn);
@@ -98,43 +113,41 @@ public class AddShop extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_shop);
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        m_view = inflater.inflate(R.layout.activity_add_shop, container, false);
         new Thread(new ListenAddShopButton()).start();
 
+
         /*获取Intent中的Bundle对象*/
-        Bundle bundle = this.getIntent().getExtras();
+        //Bundle bundle = getIntent().getExtras();
 
         /*获取Bundle中的数据，注意类型和key*/
-        double locationX = bundle.getDouble("locationX");
-        double locationY = bundle.getDouble("locationY");
+        //double locationX = bundle.getDouble("locationX");
+        //double locationY = bundle.getDouble("locationY");
 
-        etShopName = (EditText) findViewById(R.id.editText);
-        etType = (EditText) findViewById(R.id.editText4);
-        etLocationX = (EditText) findViewById(R.id.editText2);
-        etLocationY = (EditText) findViewById(R.id.editText3);
-        etDetails = (EditText) findViewById(R.id.editText5);
-        tv1 = (TextView) findViewById(R.id.textView7);
+        double locationX = HomeFragment.getLocation().latitude;
+        double locationY = HomeFragment.getLocation().longitude;
+
+        etShopName = (EditText) m_view.findViewById(R.id.editText);
+        etType = (EditText) m_view.findViewById(R.id.editText4);
+        etLocationX = (EditText) m_view.findViewById(R.id.editText2);
+        etLocationY = (EditText) m_view.findViewById(R.id.editText3);
+        etDetails = (EditText) m_view.findViewById(R.id.editText5);
+        tv1 = (TextView) m_view.findViewById(R.id.textView7);
 
         etLocationX.setText(Double.toString(locationX));
         etLocationY.setText(Double.toString(locationY));
-        System.out.println("selected point" + Double.toString(locationX) + "-----" + Double.toString(locationY));
+        return m_view;
+
     }
-/*
-    private String convertDecimalFormat(double num)
-    {
-        NumberFormat format = NumberFormat.getInstance();
-        format.setMinimumFractionDigits(10);
-        String s= format.format(num/BigDecimal);
-        DecimalFormat df = new DecimalFormat("0.0000000000");
-        String ss= df.format(num/BigDecimal);
-        return ss;
-    }
-*/
+
     private void shopRegister(String shopName, String type, String locationX, String locationY, String details) {
         String shopRegisterUrlStr = URL_recShopData + "?companyName=" + shopName + "&type=" + type + "&locationX=" + locationX + "&locationY=" + locationY + "&shopDesc=" + details;
-        new AddShop.MyAsyncTask(tv1).execute(shopRegisterUrlStr);
+        new MyAsyncTask(tv1).execute(shopRegisterUrlStr);
     }
 
     public class ListenAddShopButton implements Runnable {
@@ -142,7 +155,7 @@ public class AddShop extends AppCompatActivity {
         @Override
         public void run() {
 
-            Button btnSubmit = (Button) findViewById(R.id.button);
+            Button btnSubmit = (Button) m_view.findViewById(R.id.button);
             btnSubmit.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -154,7 +167,7 @@ public class AddShop extends AppCompatActivity {
                     ) {
                         shopRegister(etShopName.getText().toString(), etType.getText().toString(), etLocationX.getText().toString(), etLocationY.getText().toString(), etDetails.getText().toString());
                     } else {
-                        Toast.makeText(AddShop.this, "都不能为空！", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, "都不能为空！", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

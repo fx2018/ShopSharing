@@ -1,9 +1,7 @@
 package amap.android_multiple_infowindows;
 
-import android.net.http.SslError;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -12,9 +10,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
-import static android.view.View.SCROLLBARS_OUTSIDE_OVERLAY;
 
-public class ShopDetails extends AppCompatActivity {
+public class ShopDetailsActivity extends AppCompatActivity {
 
     WebView webView;
     String uri = "http://player.bilibili.com/player.html?aid=542806233&bvid=BV1Xi4y1L76s&cid=257770318";
@@ -122,7 +119,7 @@ public class ShopDetails extends AppCompatActivity {
                     submitDataToMeiTuan(getUserName(),getShopID(),getItemName(),getUserAddr());
                     if(!callAliPay())
                     {
-                        Toast.makeText(ShopDetails.this, "buy sccuess！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShopDetailsActivity.this, "buy sccuess！", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

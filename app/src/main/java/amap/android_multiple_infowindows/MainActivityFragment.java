@@ -1,20 +1,17 @@
 package amap.android_multiple_infowindows;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
+
+
 
 public class MainActivityFragment extends FragmentActivity implements OnClickListener {
 
@@ -76,7 +73,7 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
                 break;
             case 1:
                 if (friendsFragment == null) {
-                    friendsFragment = new FriendsFragment();
+                    friendsFragment = new FavFragment();
                     transaction.add(R.id.fl_content, friendsFragment);
                 } else {
                     transaction.show(friendsFragment);
@@ -85,7 +82,7 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
                 break;
             case 2:
                 if (foundFragment == null) {
-                    foundFragment = new FoundFragment();
+                    foundFragment = new AddShopFragment();
                     transaction.add(R.id.fl_content, foundFragment);
                 } else {
                     transaction.show(foundFragment);
@@ -94,7 +91,7 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
                 break;
             case 3:
                 if (mineFragment == null) {
-                    mineFragment = new MineFragment();
+                    mineFragment = new UserFragment();
                     transaction.add(R.id.fl_content, mineFragment);
                 } else {
                     transaction.show(mineFragment);

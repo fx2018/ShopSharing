@@ -4,7 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class MyShops extends AppCompatActivity {
+
+public class MyShopsActivity extends AppCompatActivity {
 
     TextView tv_name;
     @Override

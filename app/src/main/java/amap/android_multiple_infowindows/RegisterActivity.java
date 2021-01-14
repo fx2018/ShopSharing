@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import amap.android_multiple_infowindows.MD5Tool;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -89,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
             if(s.contains("OK"))
             {
                 /*Intent intent = new Intent();
-                ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MainActivity");
+                ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MainActivity_bak");
                 //param1:Activity所在应用的包名
                  //param2:Activity的包名+类名
                 intent.setComponent(cn);

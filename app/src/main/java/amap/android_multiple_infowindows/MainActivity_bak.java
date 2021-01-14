@@ -37,11 +37,9 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationClientOption.AMapLocationMode;
-import com.amap.api.location.AMapLocationClientOption.AMapLocationProtocol;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.model.LatLngBounds;
@@ -57,7 +55,7 @@ import com.amap.api.services.poisearch.PoiSearch;
 import overlay.PoiOverlay;
 
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity_bak extends AppCompatActivity
         implements
         AMapLocationListener, LocationSource, AMap.OnMapClickListener, PoiSearch.OnPoiSearchListener {
     private AMap aMap;
@@ -143,7 +141,7 @@ public class MainActivity extends AppCompatActivity
         // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
         //启动定位
         aMap = mapView.getMap();
-        aMap.setLocationSource(MainActivity.this);
+        aMap.setLocationSource(MainActivity_bak.this);
         aMap.setMyLocationEnabled(true);
         aMap.getUiSettings().setMyLocationButtonEnabled(true);
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
@@ -160,7 +158,7 @@ public class MainActivity extends AppCompatActivity
         //Mine Head Click
         //textview_mine.setOnClickListener(new MineClickListener());
 
-        aMap.setOnMapClickListener(MainActivity.this);
+        aMap.setOnMapClickListener(MainActivity_bak.this);
         markerOption = new MarkerOptions().draggable(true);
 
         new Thread(new customViewButton()).start();
@@ -268,7 +266,7 @@ public class MainActivity extends AppCompatActivity
             if(s.contains("code:200"))
             {
                 Intent intent = new Intent();
-                ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MainActivity");
+                ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MainActivity_bak");
                 //param1:Activity所在应用的包名
                 //param2:Activity的包名+类名
                 intent.setComponent(cn);
@@ -291,7 +289,7 @@ public class MainActivity extends AppCompatActivity
     private void transDataToRegNewShop()
     {
         Intent intent = new Intent();
-        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.AddShop");
+        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.AddShopActivity");
         //param1:Activity所在应用的包名
         //param2:Activity的包名+类名
         intent.setComponent(cn);
@@ -311,7 +309,7 @@ public class MainActivity extends AppCompatActivity
     private void transDataToShopDetails(String shopDescp)
     {
         Intent intent = new Intent();
-        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.ShopDetails");
+        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.ShopDetailsActivity");
         //param1:Activity所在应用的包名
         //param2:Activity的包名+类名
         intent.setComponent(cn);
@@ -323,7 +321,7 @@ public class MainActivity extends AppCompatActivity
         bundle.putString("shopDesc", shopDescp);
         bundle.putString("link", "http://player.bilibili.com/player.html?aid=542806233&bvid=BV1Xi4y1L76s&cid=257770318");
 
-        Toast.makeText(MainActivity.this, shopDescp, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity_bak.this, shopDescp, Toast.LENGTH_SHORT).show();
         /*把bundle对象assign给Intent*/
         intent.putExtras(bundle);
 
@@ -353,12 +351,12 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void run() {
             View view = null;
-            view = View.inflate(MainActivity.this, R.layout.custom_view, null);
+            view = View.inflate(MainActivity_bak.this, R.layout.custom_view, null);
             TextView txv = (TextView) view.findViewById(R.id.title1);
             txv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, "customViewButton", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity_bak.this, "customViewButton", Toast.LENGTH_SHORT).show();
 
 
                 }
@@ -382,11 +380,11 @@ public class MainActivity extends AppCompatActivity
                     }
                     else
                     {
-                        Toast.makeText(MainActivity.this, "请在地图上选择点", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity_bak.this, "请在地图上选择点", Toast.LENGTH_SHORT).show();
                     }
 
                     Intent intent = new Intent();
-                    ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MyShops");
+                    ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MyShopsActivity");
                     //param1:Activity所在应用的包名
                     //param2:Activity的包名+类名
                     intent.setComponent(cn);
@@ -398,7 +396,7 @@ public class MainActivity extends AppCompatActivity
                 case R.id.radio_find:
                     Log.i("RadioGroup", "当前用户选择"+rb_mainBottom_find.getText().toString());
                     Intent intent_find = new Intent();
-                    ComponentName cn_find = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.ShopDetails");
+                    ComponentName cn_find = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.ShopDetailsActivity");
                     //param1:Activity所在应用的包名
                     //param2:Activity的包名+类名
                     intent_find.setComponent(cn_find);
@@ -486,10 +484,10 @@ public class MainActivity extends AppCompatActivity
                     poiOverlay.addToMap();
                     poiOverlay.zoomToSpan();
                 } else {
-                    Toast.makeText(MainActivity.this, "无搜索结果", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity_bak.this, "无搜索结果", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(MainActivity.this, "无搜索结果", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity_bak.this, "无搜索结果", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -528,7 +526,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected BitmapDescriptor getBitmapDescriptor(int index) {
             View view = null;
-            view = View.inflate(MainActivity.this, R.layout.custom_view, null);
+            view = View.inflate(MainActivity_bak.this, R.layout.custom_view, null);
             TextView textView = ((TextView) view.findViewById(R.id.title1));
             textView.setText(getTitle(index));
 
@@ -584,7 +582,7 @@ public class MainActivity extends AppCompatActivity
 
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    Toast.makeText(MainActivity.this, "onMarkerClick", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity_bak.this, "onMarkerClick", Toast.LENGTH_SHORT).show();
                     MarkerOptions markerOptions;
                     String shopDesc;
                     markerOptions = marker.getOptions();

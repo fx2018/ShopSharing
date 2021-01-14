@@ -17,8 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MineFragment extends Fragment {
-    Boolean sectionCreateFlag = Boolean.FALSE;
+
+public class UserFragment extends Fragment {
+    public static Boolean sectionCreateFlag = false;
     public View m_view;
     //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
     public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
@@ -82,7 +83,7 @@ public class MineFragment extends Fragment {
                     break;
                 case R.id.re_quit:
                     Toast.makeText( m_view.getContext(), "re_quit", Toast.LENGTH_SHORT).show();
-                    sectionCreateFlag = false;
+                    UserFragment.sectionCreateFlag = false;
                     break;
                 default:
                     Log.i("relativeLayout", "当前用户选择 未实现");
@@ -107,6 +108,6 @@ public class MineFragment extends Fragment {
         username = bundle.getString("username");
         TextView tvusername = (TextView)m_view.findViewById(R.id.yonghuxingming);
         tvusername.setText(username);
-        sectionCreateFlag = true;
+        UserFragment.sectionCreateFlag = true;
     }
 }

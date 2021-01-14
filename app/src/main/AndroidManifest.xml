@@ -28,22 +28,22 @@
             android:name="com.amap.api.v2.apikey"
             android:value="31b313b29919e0dda807abbc2a7524fe" /> <!-- 定位需要的服务 适配Android Q需要加上android:foregroundServiceType="location" -->
         <service android:name="com.amap.api.location.APSService" />
-        <activity android:name=".MainActivityFragment">
+        <activity android:name="MainActivityFragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyShops" />
-        <activity android:name=".ShopDetails" />
-        <activity android:name=".AddShop" />
-        <activity android:name=".RegisterActivity">
+        <activity android:name="MyShopsActivity" />
+        <activity android:name="ShopDetailsActivity" />
+        <activity android:name="AddShopActivity" />
+        <activity android:name="RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.CALL" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name="MainActivity_bak" />
     </application>
 
 </manifest>

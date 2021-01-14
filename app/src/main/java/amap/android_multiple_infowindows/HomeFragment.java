@@ -450,7 +450,7 @@ public class HomeFragment extends Fragment implements
     private void transDataToShopDetails(String shopDescp)
     {
         Intent intent = new Intent();
-        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.ShopDetails");
+        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.ShopDetailsActivity");
         //param1:Activity所在应用的包名
         //param2:Activity的包名+类名
         intent.setComponent(cn);
@@ -472,7 +472,7 @@ public class HomeFragment extends Fragment implements
     private void transDataToRegNewShop()
     {
         Intent intent = new Intent();
-        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.AddShop");
+        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.AddShopActivity");
         //param1:Activity所在应用的包名
         //param2:Activity的包名+类名
         intent.setComponent(cn);
