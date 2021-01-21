@@ -58,6 +58,7 @@ public class HomeFragment extends Fragment implements
     //public static final String URL = "http://192.168.0.19:35001/";
     public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
     public static final String URL_getShopInfo = URL + "getShopData.aspx";
+    public static final String URL_getNearShopInfo = URL + "getNearShopInfo.aspx";
     private AMap aMap;
     private MapView mapView;
     public View m_view;
@@ -102,7 +103,7 @@ public class HomeFragment extends Fragment implements
         aMap.getUiSettings().setMyLocationButtonEnabled(true);
         aMap.setOnMapClickListener(this);
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
-        getInfoByDB();
+        //getInfoByDB();
         return m_view;
     }
 
@@ -110,14 +111,16 @@ public class HomeFragment extends Fragment implements
     @Override
     public void onMapClick(LatLng latLng) {
         markerOption = new MarkerOptions();
-        markerOption.icon(ICON_YELLOW);
-        markerOption.title(shopName);
+        markerOption.icon(ICON_RED);
+        //markerOption.title(shopName);
         centerLatLng = latLng;
         addCenterMarker(centerLatLng);
 
         System.out.println("center point" + centerLatLng.latitude+ "-----" + centerLatLng.longitude);
         //only trans data, not go activity
-        transDataToRegNewShop();
+        //transDataToRegNewShop();
+        shopName = "";
+        ShowrRecentShop(shopName);
 
         //drawCircle(centerLatLng);
 
@@ -193,13 +196,15 @@ public class HomeFragment extends Fragment implements
                 case MSG_SUCCESS:
                     shopinfo = analyzeData(msg.obj.toString());
                     for(int i =0; i < shopinfo.length; i++) {
-                        if("null" == shopinfo[i].companyName) {
+                        if("" == shopinfo[i].companyName) {
                             continue;
                         }
                         //Draw every location
                         LatLng location = new LatLng(Double.valueOf(shopinfo[i].locationX),Double.valueOf(shopinfo[i].locationY));
 
-                        showDataOnMap(location, i);
+                        if((Double.valueOf(shopinfo[i].locationX)!=0&(Double.valueOf(shopinfo[i].locationY))!=0)) {
+                            showDataOnMap(location, i);
+                        }
                     }
 
                     break;
@@ -375,6 +380,13 @@ public class HomeFragment extends Fragment implements
         //TextView tvResult = null;
         new MyAsyncTask(shopInfo).execute(getShopInfoUrlStr);
     }
+
+    private void ShowrRecentShop(String shopInfo) {
+        String getNearShopInfoUrlStr = URL_getNearShopInfo + "?local_X=" + Double.toString(getLocation().latitude) + "&local_Y=" + Double.toString(getLocation().longitude);
+        //TextView tvResult = null;
+        new MyAsyncTask(shopInfo).execute(getNearShopInfoUrlStr);
+    }
+
     private void getInfoByDB()
     {
         ShowAllShop(shopName);
