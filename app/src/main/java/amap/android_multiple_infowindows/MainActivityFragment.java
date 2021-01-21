@@ -13,31 +13,25 @@ import android.widget.TextView;
 
 
 
+
 public class MainActivityFragment extends FragmentActivity implements OnClickListener {
 
     // 底部菜单4个Linearlayout
     private LinearLayout ll_home;
-    private LinearLayout ll_friends;
-    private LinearLayout ll_found;
+    private LinearLayout ll_fav;
+    private LinearLayout ll_adshop;
     private LinearLayout ll_mine;
 
     // 底部菜单4个ImageView
     private ImageView iv_home;
-    private ImageView iv_friends;
-    private ImageView iv_found;
+    private ImageView iv_fav;
+    private ImageView iv_adshop;
     private ImageView iv_mine;
-
-    // 底部菜单4个菜单标题
-    private TextView tv_home;
-    private TextView tv_friends;
-    private TextView tv_found;
-    private TextView tv_mine;
-
 
     // 4个Fragment
     private Fragment homeFragment;
-    private Fragment friendsFragment;
-    private Fragment foundFragment;
+    private Fragment favFragment;
+    private Fragment adshopFragment;
     private Fragment mineFragment;
 
 
@@ -72,20 +66,20 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
                 }
                 break;
             case 1:
-                if (friendsFragment == null) {
-                    friendsFragment = new FavFragment();
-                    transaction.add(R.id.fl_content, friendsFragment);
+                if (favFragment == null) {
+                    favFragment = new FavFragment();
+                    transaction.add(R.id.fl_content, favFragment);
                 } else {
-                    transaction.show(friendsFragment);
+                    transaction.show(favFragment);
                 }
 
                 break;
             case 2:
-                if (foundFragment == null) {
-                    foundFragment = new AddShopFragment();
-                    transaction.add(R.id.fl_content, foundFragment);
+                if (adshopFragment == null) {
+                    adshopFragment = new AddShopFragment();
+                    transaction.add(R.id.fl_content, adshopFragment);
                 } else {
-                    transaction.show(foundFragment);
+                    transaction.show(adshopFragment);
                 }
 
                 break;
@@ -113,11 +107,11 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
         if (homeFragment != null) {
             transaction.hide(homeFragment);
         }
-        if (friendsFragment != null) {
-            transaction.hide(friendsFragment);
+        if (favFragment != null) {
+            transaction.hide(favFragment);
         }
-        if (foundFragment != null) {
-            transaction.hide(foundFragment);
+        if (adshopFragment != null) {
+            transaction.hide(adshopFragment);
         }
         if (mineFragment != null) {
             transaction.hide(mineFragment);
@@ -128,8 +122,8 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
     private void initEvent() {
         // 设置按钮监听
         ll_home.setOnClickListener(this);
-        ll_friends.setOnClickListener(this);
-        ll_found.setOnClickListener(this);
+        ll_fav.setOnClickListener(this);
+        ll_adshop.setOnClickListener(this);
         ll_mine.setOnClickListener(this);
 
     }
@@ -141,8 +135,8 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
 
         // 底部菜单4个ImageView
         this.iv_home = (ImageView) findViewById(R.id.iv_home);
-        this.iv_friends = (ImageView) findViewById(R.id.iv_friends);
-        this.iv_found = (ImageView) findViewById(R.id.iv_found);
+        this.iv_fav = (ImageView) findViewById(R.id.iv_fav);
+        this.iv_adshop = (ImageView) findViewById(R.id.iv_adshop);
         this.iv_mine = (ImageView) findViewById(R.id.iv_mine);
 
         // 底部菜单4个菜单标题
@@ -152,8 +146,8 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
         //this.tv_mine = (TextView) findViewById(R.id.tv_mine);
 
         this.ll_home = (LinearLayout) findViewById(R.id.ll_home);;
-        this.ll_friends = (LinearLayout) findViewById(R.id.ll_friends);;
-        this.ll_found = (LinearLayout) findViewById(R.id.ll_found);;
+        this.ll_fav = (LinearLayout) findViewById(R.id.ll_fav);;
+        this.ll_adshop = (LinearLayout) findViewById(R.id.ll_adshop);;
         this.ll_mine = (LinearLayout) findViewById(R.id.ll_mine);;
     }
 
@@ -169,15 +163,19 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
                 //tv_home.setTextColor(0xff1B940A);
                 initFragment(0);
                 break;
-            case R.id.ll_friends:
+            case R.id.ll_fav:
                 //iv_address.setImageResource(R.drawable.tab_address_pressed);
                 //tv_address.setTextColor(0xff1B940A);
-                initFragment(1);
+                if(UserFragment.isLogIn == true) {
+                    //initFragment(1);
+                }
                 break;
-            case R.id.ll_found:
+            case R.id.ll_adshop:
                 //iv_friend.setImageResource(R.drawable.tab_find_frd_pressed);
                 //tv_friend.setTextColor(0xff1B940A);
-                initFragment(2);
+                if((UserFragment.isLogIn == true)&&(HomeFragment.isMapClicked == true)) {
+                    initFragment(2);
+                }
                 break;
             case R.id.ll_mine:
                 //iv_setting.setImageResource(R.drawable.tab_find_frd_pressed);

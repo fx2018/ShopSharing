@@ -108,8 +108,11 @@ public class HomeFragment extends Fragment implements
     }
 
 
+    public static Boolean isMapClicked = false;
+    public static Boolean isAdmin = false;
     @Override
     public void onMapClick(LatLng latLng) {
+        //aMap.clear();
         markerOption = new MarkerOptions();
         markerOption.icon(ICON_RED);
         //markerOption.title(shopName);
@@ -120,7 +123,10 @@ public class HomeFragment extends Fragment implements
         //only trans data, not go activity
         //transDataToRegNewShop();
         shopName = "";
-        ShowrRecentShop(shopName);
+        isMapClicked = true;
+        if(UserFragment.isLogIn == false) {
+            ShowrRecentShop(shopName);
+        }
 
         //drawCircle(centerLatLng);
 

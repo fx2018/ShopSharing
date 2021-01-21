@@ -21,7 +21,7 @@ android:layout_height="wrap_content">
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_friends"
+        android:id="@+id/ll_fav"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -29,7 +29,7 @@ android:layout_height="wrap_content">
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/iv_friends"
+            android:id="@+id/iv_fav"
             android:layout_width="33dp"
             android:layout_height="39dp"
             android:src="@drawable/comnuication" />
@@ -37,7 +37,7 @@ android:layout_height="wrap_content">
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_found"
+        android:id="@+id/ll_adshop"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -45,7 +45,7 @@ android:layout_height="wrap_content">
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/iv_found"
+            android:id="@+id/iv_adshop"
             android:layout_width="31dp"
             android:layout_height="37dp"
             android:src="@drawable/funs" />

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 
 public class UserFragment extends Fragment {
-    public static Boolean sectionCreateFlag = false;
+    public static Boolean isLogIn = false;
     public View m_view;
     //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
     public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
@@ -29,7 +29,7 @@ public class UserFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(Boolean.FALSE == sectionCreateFlag) {
+        if(isLogIn == false) {
             RegisterLoginLayoutAndActivity(inflater, container, savedInstanceState);
         }
         ShowMineLayoutAndActivity(inflater, container, savedInstanceState);
@@ -83,7 +83,8 @@ public class UserFragment extends Fragment {
                     break;
                 case R.id.re_quit:
                     Toast.makeText( m_view.getContext(), "re_quit", Toast.LENGTH_SHORT).show();
-                    UserFragment.sectionCreateFlag = false;
+                    UserFragment.isLogIn = false;
+                    RegisterLoginLayoutAndActivity();
                     break;
                 default:
                     Log.i("relativeLayout", "当前用户选择 未实现");
@@ -100,6 +101,14 @@ public class UserFragment extends Fragment {
         intent.setComponent(cn);
         startActivityForResult(intent, 1);
     }
+
+    public void RegisterLoginLayoutAndActivity()  {
+        Intent intent = new Intent();
+        ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.RegisterActivity");
+        intent.setComponent(cn);
+        startActivityForResult(intent, 1);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -108,6 +117,6 @@ public class UserFragment extends Fragment {
         username = bundle.getString("username");
         TextView tvusername = (TextView)m_view.findViewById(R.id.yonghuxingming);
         tvusername.setText(username);
-        UserFragment.sectionCreateFlag = true;
+        UserFragment.isLogIn = true;
     }
 }
