@@ -1,40 +1,25 @@
 package amap.android_multiple_infowindows;
 
-        import android.content.ComponentName;
-        import android.content.Intent;
-        import android.os.AsyncTask;
-        import android.os.Bundle;
-        import android.support.annotation.Nullable;
-        import android.support.v4.app.Fragment;
-        import android.text.TextUtils;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.RadioButton;
-        import android.widget.RadioGroup;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-        import com.amap.api.location.AMapLocation;
-        import com.amap.api.location.AMapLocationListener;
-        import com.amap.api.maps.AMap;
-        import com.amap.api.maps.LocationSource;
-        import com.amap.api.maps.MapView;
-        import com.amap.api.maps.model.LatLng;
-        import com.amap.api.services.core.PoiItem;
-        import com.amap.api.services.poisearch.PoiResult;
-        import com.amap.api.services.poisearch.PoiSearch;
-
-        import java.io.BufferedReader;
-        import java.io.IOException;
-        import java.io.InputStream;
-        import java.io.InputStreamReader;
-        import java.net.HttpURLConnection;
-        import java.net.MalformedURLException;
-        import java.net.URL;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 

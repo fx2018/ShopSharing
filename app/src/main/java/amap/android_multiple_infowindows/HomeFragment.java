@@ -13,9 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +33,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.animation.Animation;
 import com.amap.api.maps.model.animation.RotateAnimation;
+import com.amap.api.navi.AMapNavi;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -60,6 +58,7 @@ public class HomeFragment extends Fragment implements
     public static final String URL_getShopInfo = URL + "getShopData.aspx";
     public static final String URL_getNearShopInfo = URL + "getNearShopInfo.aspx";
     private AMap aMap;
+    private AMapNavi mAMapNavi;
     private MapView mapView;
     public View m_view;
     public ShopInfo[] shopinfo;
@@ -190,9 +189,30 @@ public class HomeFragment extends Fragment implements
         mlocationClient = null;
     }
 
+    /*
+    ============================================Navi code =================================================
 
-
-
+    protected NaviLatLng mEndLatlng = new NaviLatLng(40.084894,116.603039);
+    protected NaviLatLng mStartLatlng = new NaviLatLng(39.825934,116.342972);
+    protected final List<NaviLatLng> sList = new ArrayList<NaviLatLng>();
+    protected final List<NaviLatLng> eList = new ArrayList<NaviLatLng>();
+    protected List<NaviLatLng> mWayPointList = new ArrayList<NaviLatLng>();
+    @Override
+    public void onInitNaviSuccess() {
+        super.onInitNaviSuccess();
+        sList.add(mStartLatlng);
+        eList.add(mEndLatlng);
+        int strategy = 0;
+        strategy = mAMapNavi.strategyConvert(true, false, false, false, false);
+        AMapCarInfo carInfo = new AMapCarInfo();
+        mAMapNavi.calculateDriveRoute(sList, eList, mWayPointList, strategy);
+    }
+    @Override
+    public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
+        super.onCalculateRouteSuccess(aMapCalcRouteResult);
+        mAMapNavi.startNavi(NaviType.EMULATOR);
+    }
+   */
     /*
    =============================================UI code====================================================
    */
@@ -469,6 +489,7 @@ public class HomeFragment extends Fragment implements
     {
         Intent intent = new Intent();
         ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.ShopDetailsActivity");
+        //ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.SimpleNaviActivity");
         //param1:Activity所在应用的包名
         //param2:Activity的包名+类名
         intent.setComponent(cn);
