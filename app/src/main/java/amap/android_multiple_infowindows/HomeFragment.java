@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment implements
     public AMapLocationClient mlocationClient;
     //声明mLocationOption对象
     public AMapLocationClientOption mLocationOption = null;
-    public AMapLocation currentLocation = null;
+    public static AMapLocation currentLocation = null;
 
     // 中心点marker
     private BitmapDescriptor ICON_YELLOW = BitmapDescriptorFactory
@@ -81,7 +81,8 @@ public class HomeFragment extends Fragment implements
     private MarkerOptions markerOption = null;
     private Marker centerMarker;
     // 中心点坐标
-    public static LatLng centerLatLng = null;
+    public static LatLng centerLatLng_mk = null;
+
     LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
 
     ViewPoiOverlay poiOverlay;
@@ -115,10 +116,10 @@ public class HomeFragment extends Fragment implements
         markerOption = new MarkerOptions();
         markerOption.icon(ICON_RED);
         //markerOption.title(shopName);
-        centerLatLng = latLng;
-        addCenterMarker(centerLatLng);
+        centerLatLng_mk = latLng;
+        addCenterMarker(centerLatLng_mk);
 
-        System.out.println("center point" + centerLatLng.latitude+ "-----" + centerLatLng.longitude);
+        System.out.println("center point" + centerLatLng_mk.latitude+ "-----" + centerLatLng_mk.longitude);
         //only trans data, not go activity
         //transDataToRegNewShop();
         shopName = "";
@@ -189,30 +190,6 @@ public class HomeFragment extends Fragment implements
         mlocationClient = null;
     }
 
-    /*
-    ============================================Navi code =================================================
-
-    protected NaviLatLng mEndLatlng = new NaviLatLng(40.084894,116.603039);
-    protected NaviLatLng mStartLatlng = new NaviLatLng(39.825934,116.342972);
-    protected final List<NaviLatLng> sList = new ArrayList<NaviLatLng>();
-    protected final List<NaviLatLng> eList = new ArrayList<NaviLatLng>();
-    protected List<NaviLatLng> mWayPointList = new ArrayList<NaviLatLng>();
-    @Override
-    public void onInitNaviSuccess() {
-        super.onInitNaviSuccess();
-        sList.add(mStartLatlng);
-        eList.add(mEndLatlng);
-        int strategy = 0;
-        strategy = mAMapNavi.strategyConvert(true, false, false, false, false);
-        AMapCarInfo carInfo = new AMapCarInfo();
-        mAMapNavi.calculateDriveRoute(sList, eList, mWayPointList, strategy);
-    }
-    @Override
-    public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
-        super.onCalculateRouteSuccess(aMapCalcRouteResult);
-        mAMapNavi.startNavi(NaviType.EMULATOR);
-    }
-   */
     /*
    =============================================UI code====================================================
    */
@@ -408,7 +385,7 @@ public class HomeFragment extends Fragment implements
     }
 
     private void ShowrRecentShop(String shopInfo) {
-        String getNearShopInfoUrlStr = URL_getNearShopInfo + "?local_X=" + Double.toString(getLocation().latitude) + "&local_Y=" + Double.toString(getLocation().longitude);
+        String getNearShopInfoUrlStr = URL_getNearShopInfo + "?local_X=" + Double.toString(getLocation_mk().latitude) + "&local_Y=" + Double.toString(getLocation_mk().longitude);
         //TextView tvResult = null;
         new MyAsyncTask(shopInfo).execute(getNearShopInfoUrlStr);
     }
@@ -469,9 +446,17 @@ public class HomeFragment extends Fragment implements
                 public boolean onMarkerClick(Marker marker) {
                     MarkerOptions markerOptions;
                     String shopDesc;
+                    Double curLocX = currentLocation.getLatitude();
+                    Double curLocY = currentLocation.getLongitude();
+
+                    Double destLocX = marker.getPosition().latitude;
+                    Double destLocY = marker.getPosition().longitude;
                     markerOptions = marker.getOptions();
+
+                    Toast.makeText(m_view.getContext(), destLocX.toString()+ ", "+ destLocY.toString(), Toast.LENGTH_LONG).show();
+
                     shopDesc = markerOptions.getTitle();
-                    transDataToShopDetails(shopDesc);
+                    transDataToShopDetails(shopDesc, curLocX, curLocY, destLocX, destLocY);
                     return true;
                 }
             });
@@ -485,7 +470,7 @@ public class HomeFragment extends Fragment implements
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,13));
     }
 
-    private void transDataToShopDetails(String shopDescp)
+    private void transDataToShopDetails(String shopDescp, Double curLocX, Double curLocY, Double destLocX, Double destLocY)
     {
         Intent intent = new Intent();
         ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.ShopDetailsActivity");
@@ -498,16 +483,23 @@ public class HomeFragment extends Fragment implements
         /* 通过Bundle对象存储需要传递的数据 */
         Bundle bundle = new Bundle();
         /*字符、字符串、布尔、字节数组、浮点数等等，都可以传*/
+        //Video link
         bundle.putString("shopDesc", shopDescp);
-        //bundle.putString("link", "http://player.bilibili.com/player.html?aid=542806233&bvid=BV1Xi4y1L76s&cid=257770318");
 
-        Toast.makeText(m_view.getContext(), shopDescp, Toast.LENGTH_SHORT).show();
+        //Location Info
+        bundle.putDouble("curLocX", curLocX);
+        bundle.putDouble("curLocY", curLocY);
+        bundle.putDouble("destLocX", destLocX);
+        bundle.putDouble("destLocY", destLocY);
+
+        //Toast.makeText(m_view.getContext(), shopDescp, Toast.LENGTH_SHORT).show();
         /*把bundle对象assign给Intent*/
         intent.putExtras(bundle);
 
         startActivity(intent);
     }
 
+    /*
     private void transDataToRegNewShop()
     {
         Intent intent = new Intent();
@@ -516,22 +508,30 @@ public class HomeFragment extends Fragment implements
         //param2:Activity的包名+类名
         intent.setComponent(cn);
 
-        /* 通过Bundle对象存储需要传递的数据 */
+        //通过Bundle对象存储需要传递的数据
         Bundle bundle = new Bundle();
-        if(centerLatLng != null) {
-            /*字符、字符串、布尔、字节数组、浮点数等等，都可以传*/
-            bundle.putDouble("locationX", centerLatLng.latitude);
-            bundle.putDouble("locationY", centerLatLng.longitude);
+        if(centerLatLng_mk != null) {
+            //字符、字符串、布尔、字节数组、浮点数等等，都可以传
+            bundle.putDouble("locationX", centerLatLng_mk.latitude);
+            bundle.putDouble("locationY", centerLatLng_mk.longitude);
 
-            /*把bundle对象assign给Intent*/
+            //把bundle对象assign给Intent
             intent.putExtras(bundle);
         }
 
-        //startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+        startActivity(intent);
+        //startActivityForResult(intent, 1);
+    }
+    */
+
+    public static LatLng getLocation_mk()
+    {
+        return centerLatLng_mk;
     }
 
-    public static LatLng getLocation()
+    public void getLocation_cur()
     {
-        return centerLatLng;
     }
 }

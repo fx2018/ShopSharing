@@ -1,5 +1,6 @@
 package amap.android_multiple_infowindows;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class AddShopActivity extends AppCompatActivity {
     private EditText etLocationY;
     private EditText etDetails;
     private TextView tv1;
+    private double locationX;
+    private double locationY;
 
     //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
     //public static final String URL = "http://192.168.31.158:8080/ServLetTest/";
@@ -99,12 +102,7 @@ public class AddShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_shop);
         new Thread(new ListenAddShopButton()).start();
 
-        /*获取Intent中的Bundle对象*/
-        Bundle bundle = this.getIntent().getExtras();
-
-        /*获取Bundle中的数据，注意类型和key*/
-        double locationX = bundle.getDouble("locationX");
-        double locationY = bundle.getDouble("locationY");
+        getLocParams();
 
         etShopName = (EditText) findViewById(R.id.editText);
         etType = (EditText) findViewById(R.id.editText4);
@@ -117,6 +115,7 @@ public class AddShopActivity extends AppCompatActivity {
         etLocationY.setText(Double.toString(locationY));
         System.out.println("selected point" + Double.toString(locationX) + "-----" + Double.toString(locationY));
     }
+
 /*
     private String convertDecimalFormat(double num)
     {
@@ -133,6 +132,24 @@ public class AddShopActivity extends AppCompatActivity {
         new AddShopActivity.MyAsyncTask(tv1).execute(shopRegisterUrlStr);
     }
 
+    public void getLocParams()
+    {
+        /*获取Intent中的Bundle对象*/
+        Bundle bundle = this.getIntent().getExtras();
+
+        /*获取Bundle中的数据，注意类型和key*/
+        locationX = bundle.getDouble("locationX");
+        locationY = bundle.getDouble("locationY");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+
+        getLocParams();
+
+    }
     public class ListenAddShopButton implements Runnable {
 
         @Override

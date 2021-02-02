@@ -2,11 +2,9 @@ package amap.android_multiple_infowindows;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +57,7 @@ public class UserFragment extends Fragment {
                 case R.id.re_shop:
                     Toast.makeText( m_view.getContext(), "re_shop", Toast.LENGTH_SHORT).show();
                     //Intent intent = new Intent();
-                    //ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.MyRunShopActivity");
+                    //ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.SimpleNaviActivity");
                     //param1:Activity所在应用的包名
                     //param2:Activity的包名+类名
                     //intent.setComponent(cn);
@@ -115,7 +113,7 @@ public class UserFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         Bundle bundle = data.getExtras();
         username = bundle.getString("username");
-        TextView tvusername = (TextView)m_view.findViewById(R.id.yonghuxingming);
+        TextView tvusername = (TextView)m_view.findViewById(R.id.username);
         tvusername.setText(username);
         UserFragment.isLogIn = true;
     }

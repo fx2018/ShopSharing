@@ -173,9 +173,9 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
             case R.id.ll_adshop:
                 //iv_friend.setImageResource(R.drawable.tab_find_frd_pressed);
                 //tv_friend.setTextColor(0xff1B940A);
-                if((UserFragment.isLogIn == true)&&(HomeFragment.isMapClicked == true)) {
+                //if((UserFragment.isLogIn == true)&&(HomeFragment.isMapClicked == true)) {
                     initFragment(2);
-                }
+                //}
                 break;
             case R.id.ll_mine:
                 //iv_setting.setImageResource(R.drawable.tab_find_frd_pressed);

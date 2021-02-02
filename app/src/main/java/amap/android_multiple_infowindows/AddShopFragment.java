@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -108,14 +109,15 @@ public class AddShopFragment extends Fragment{
 
 
         /*获取Intent中的Bundle对象*/
-        //Bundle bundle = getIntent().getExtras();
+        //Bundle bundle = m_view.getContext();
 
         /*获取Bundle中的数据，注意类型和key*/
         //double locationX = bundle.getDouble("locationX");
         //double locationY = bundle.getDouble("locationY");
 
-        double locationX = HomeFragment.getLocation().latitude;
-        double locationY = HomeFragment.getLocation().longitude;
+        double locationX = HomeFragment.getLocation_mk().latitude;
+        double locationY = HomeFragment.getLocation_mk().longitude;
+
 
         etShopName = (EditText) m_view.findViewById(R.id.editText);
         etType = (EditText) m_view.findViewById(R.id.editText4);
@@ -126,6 +128,9 @@ public class AddShopFragment extends Fragment{
 
         etLocationX.setText(Double.toString(locationX));
         etLocationY.setText(Double.toString(locationY));
+
+        Toast.makeText(m_view.getContext(), "locationX: "+ locationX + "locationY: "+ locationY, Toast.LENGTH_LONG).show();
+
         return m_view;
 
     }

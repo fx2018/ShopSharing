@@ -1,7 +1,10 @@
 package amap.android_multiple_infowindows;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
@@ -36,13 +39,28 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
     protected final List<NaviLatLng> eList = new ArrayList<NaviLatLng>();
     protected List<NaviLatLng> mWayPointList = new ArrayList<NaviLatLng>();
 
+    public Double curLocX = 0.0;
+    public Double curLocY = 0.0;
+
+    public Double destLocX = 0.0;
+    public Double destLocY = 0.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        curLocX = 0.0;
+        curLocY = 0.0;
+
+        destLocX = 0.0;
+        destLocY = 0.0;
+
         setContentView(R.layout.activity_basic_navi);
         mAMapNaviView = (AMapNaviView) findViewById(R.id.navi_view);
         mAMapNaviView.onCreate(savedInstanceState);
+
+        getNaviParams();
+        generateNaviData();
 
         mAMapNavi = AMapNavi.getInstance(getApplicationContext());
         mAMapNavi.addAMapNaviListener(this);
@@ -50,6 +68,7 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
 
         //isGps = getIntent().getBooleanExtra("gps", false);
         if (isGps) {
+            //this.onStart();
             mAMapNavi.startNavi(NaviType.GPS);
         } else {
             mAMapNavi.startNavi(NaviType.EMULATOR);
@@ -60,6 +79,7 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
     protected void onResume() {
         super.onResume();
         mAMapNaviView.onResume();
+
     }
 
     @Override
@@ -78,21 +98,74 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
         mAMapNavi.stopNavi();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
     @Override
-    public void onInitNaviFailure() {
+    protected void onStart() {
+        super.onStart();
+        //getNaviParams();
+        if (isGps) {
+            //this.onStart();
+            mAMapNavi.startNavi(NaviType.GPS);
+        } else {
+            mAMapNavi.startNavi(NaviType.EMULATOR);
+        }
+    }
 
+    public void getNaviParams()
+    {
+        /*获取Intent中的Bundle对象*/
+        Bundle bundle = this.getIntent().getExtras();
+
+        /*获取Bundle中的数据，注意类型和key*/
+        curLocX = bundle.getDouble("curLocX");
+        curLocY = bundle.getDouble("curLocY");
+
+        destLocX = bundle.getDouble("destLocX");
+        destLocY = bundle.getDouble("destLocY");
+
+        Toast.makeText(SimpleNaviActivity.this, "destLocX: " + destLocX.toString()+ ", " + "destLocY: " + destLocY.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    public void generateNaviData()
+    {
+        if((destLocX != 0.0)&&(destLocY != 0.0)&&(curLocX !=0.0)&&(curLocY!=0.0)) {
+            mEndLatlng = new NaviLatLng(destLocX, destLocY);
+            mStartLatlng = new NaviLatLng(curLocX, curLocY);
+            Toast.makeText(SimpleNaviActivity.this, "mStartLatlng: " + mStartLatlng.toString() + ", "+"mEndLatlng: " + mEndLatlng.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void onInitNaviSuccess() {
         //super.onInitNaviSuccess();
+
+        //getNaviParams();
+        //generateNaviData();
+
         sList.add(mStartLatlng);
         eList.add(mEndLatlng);
         int strategy = 0;
         strategy = mAMapNavi.strategyConvert(true, false, false, false, false);
         AMapCarInfo carInfo = new AMapCarInfo();
         mAMapNavi.calculateDriveRoute(sList, eList, mWayPointList, strategy);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+
+        getNaviParams();
+
+    }
+
+    @Override
+    public void onInitNaviFailure() {
+
     }
 
     @Override

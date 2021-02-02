@@ -7,19 +7,19 @@ import android.widget.TextView;
 
 public class MyShopsActivity extends AppCompatActivity {
 
-    TextView tv_name;
+    TextView tv_username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_shops);
 
-        tv_name = (TextView) findViewById(R.id.yonghuxingming);
+        tv_username = (TextView) findViewById(R.id.username);
         /*获取Intent中的Bundle对象*/
         Bundle bundle = this.getIntent().getExtras();
 
         /*获取Bundle中的数据，注意类型和key*/
         String username = bundle.getString("username");
 
-        tv_name.setText(username);
+        tv_username.setText(username);
     }
 }
