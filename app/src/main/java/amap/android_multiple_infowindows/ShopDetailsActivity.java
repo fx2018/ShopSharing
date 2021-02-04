@@ -105,7 +105,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
         intent.setComponent(cn);
 
-        stopService(intent);
+        //stopService(intent);
 
         /* 通过Bundle对象存储需要传递的数据 */
         Bundle bundle = new Bundle();

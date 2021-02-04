@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.amap.api.navi.AMapNavi;
@@ -24,6 +25,7 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.navi.model.AMapCarInfo;
+import com.mysql.cj.log.NullLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +35,8 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
     private AMapNaviView mAMapNaviView;
     private AMapNavi mAMapNavi;
     private boolean isGps = false;
-    protected NaviLatLng mEndLatlng = new NaviLatLng(40.084894,116.603039);
-    protected NaviLatLng mStartLatlng = new NaviLatLng(39.825934,116.342972);
+    public static NaviLatLng mEndLatlng = null;
+    public static NaviLatLng mStartLatlng = null;
     protected final List<NaviLatLng> sList = new ArrayList<NaviLatLng>();
     protected final List<NaviLatLng> eList = new ArrayList<NaviLatLng>();
     protected List<NaviLatLng> mWayPointList = new ArrayList<NaviLatLng>();
@@ -55,30 +57,26 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
         destLocX = 0.0;
         destLocY = 0.0;
 
+        getNaviParams();
+        generateNaviData();
+
         setContentView(R.layout.activity_basic_navi);
         mAMapNaviView = (AMapNaviView) findViewById(R.id.navi_view);
         mAMapNaviView.onCreate(savedInstanceState);
-
-        getNaviParams();
-        generateNaviData();
 
         mAMapNavi = AMapNavi.getInstance(getApplicationContext());
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.setUseInnerVoice(true);
 
         //isGps = getIntent().getBooleanExtra("gps", false);
-        if (isGps) {
-            //this.onStart();
-            mAMapNavi.startNavi(NaviType.GPS);
-        } else {
-            mAMapNavi.startNavi(NaviType.EMULATOR);
-        }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mAMapNaviView.onResume();
+        Toast.makeText(SimpleNaviActivity.this, "onResume", Toast.LENGTH_LONG).show();
 
     }
 
@@ -86,27 +84,69 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
     protected void onPause() {
         super.onPause();
         mAMapNaviView.onPause();
-
+        Toast.makeText(SimpleNaviActivity.this, "onPause", Toast.LENGTH_LONG).show();
 //        停止导航之后，会触及底层stop，然后就不会再有回调了，但是讯飞当前还是没有说完的半句话还是会说完
-//        mAMapNavi.stopNavi();
+        //mAMapNavi.stopNavi();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mAMapNaviView.onDestroy();
-        mAMapNavi.stopNavi();
+        Toast.makeText(SimpleNaviActivity.this, "onDestroy", Toast.LENGTH_LONG).show();
+
     }
+
+    /*
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                //时间相隔大于2s吐司提醒
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();
+            } else {
+                //退出应用
+                finish();
+            }
+
+            //mAMapNaviView.onDestroy();
+            //mAMapNavi.stopNavi();
+
+            Intent intent = new Intent();
+            ComponentName cn = new ComponentName("amap.android_multiple_infowindows", "amap.android_multiple_infowindows.ShopDetailsActivity");
+
+            intent.setComponent(cn);
+
+            startActivity(intent);
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    */
 
     @Override
     protected void onStop() {
+
         super.onStop();
+        Toast.makeText(SimpleNaviActivity.this, "onStop", Toast.LENGTH_LONG).show();
+
+        mAMapNavi.stopNavi();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         //getNaviParams();
+        sList.add(mStartLatlng);
+        eList.add(mEndLatlng);
+        int strategy = 0;
+        strategy = mAMapNavi.strategyConvert(true, false, false, false, false);
+        AMapCarInfo carInfo = new AMapCarInfo();
+        mAMapNavi.calculateDriveRoute(sList, eList, mWayPointList, strategy);
+
         if (isGps) {
             //this.onStart();
             mAMapNavi.startNavi(NaviType.GPS);
@@ -145,13 +185,14 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
 
         //getNaviParams();
         //generateNaviData();
-
+        /*
         sList.add(mStartLatlng);
         eList.add(mEndLatlng);
         int strategy = 0;
         strategy = mAMapNavi.strategyConvert(true, false, false, false, false);
         AMapCarInfo carInfo = new AMapCarInfo();
         mAMapNavi.calculateDriveRoute(sList, eList, mWayPointList, strategy);
+        */
     }
 
     @Override
@@ -159,7 +200,7 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
 
-        getNaviParams();
+        //getNaviParams();
 
     }
 
