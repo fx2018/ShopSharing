@@ -33,6 +33,7 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
     private Fragment favFragment;
     private Fragment adshopFragment;
     private Fragment mineFragment;
+    private Fragment logRegFragment;
 
 
     @Override
@@ -75,22 +76,33 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
 
                 break;
             case 2:
-                if (adshopFragment == null) {
+                if(adshopFragment != null)
+                {
+                    adshopFragment.onDestroy();
+                }
+                if(HomeFragment.centerLatLng_mk != null) {
                     adshopFragment = new AddShopFragment();
                     transaction.add(R.id.fl_content, adshopFragment);
-                } else {
-                    transaction.show(adshopFragment);
                 }
-
                 break;
             case 3:
-                if (mineFragment == null) {
-                    mineFragment = new UserFragment();
-                    transaction.add(R.id.fl_content, mineFragment);
-                } else {
-                    transaction.show(mineFragment);
+                if(mineFragment != null)
+                {
+                    mineFragment.onDestroy();
+                }
+                if(logRegFragment != null)
+                {
+                    logRegFragment.onDestroy();
                 }
 
+                if(UserFragment.isLogIn == true) {
+                    mineFragment = new UserFragment();
+                    transaction.add(R.id.fl_content, mineFragment);
+                }
+                else{
+                    logRegFragment = new LogRegFragment();
+                    transaction.add(R.id.fl_content, logRegFragment);
+                }
                 break;
 
             default:
@@ -115,6 +127,9 @@ public class MainActivityFragment extends FragmentActivity implements OnClickLis
         }
         if (mineFragment != null) {
             transaction.hide(mineFragment);
+        }
+        if(logRegFragment != null) {
+            transaction.hide(logRegFragment);
         }
 
     }
