@@ -1,11 +1,9 @@
 package amap.android_multiple_infowindows;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -22,8 +20,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import amap.android_multiple_infowindows.MD5Tool;
-
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText etAccount;
@@ -31,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView tvResult;
 
     //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
-    public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
+    public static final String URL = "http://us-la-cn2.sakurafrp.com:12484/";
     public static final String URL_Register = URL + "userRegister.aspx";
     public static final String URL_Login = URL + "userLogin.aspx";
 

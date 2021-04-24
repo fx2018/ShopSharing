@@ -54,7 +54,7 @@ import overlay.PoiOverlay;
 public class HomeFragment extends Fragment implements
         AMapLocationListener, LocationSource, AMap.OnMapClickListener , PoiSearch.OnPoiSearchListener{
     //public static final String URL = "http://192.168.0.19:35001/";
-    public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
+    public static final String URL = "http://us-la-cn2.sakurafrp.com:12484/";
     public static final String URL_getShopInfo = URL + "getShopData.aspx";
     public static final String URL_getNearShopInfo = URL + "getNearShopInfo.aspx";
     private AMap aMap;
