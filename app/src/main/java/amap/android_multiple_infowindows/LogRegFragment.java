@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,8 +22,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static android.app.Activity.RESULT_OK;
-
 public class LogRegFragment extends Fragment {
 
     private EditText etAccount;
@@ -34,7 +30,7 @@ public class LogRegFragment extends Fragment {
     public View m_view;
 
     //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
-    public static final String URL = "http://us-or-aws.sakurafrp.com:35001/";
+    public static final String URL = "http://us-la-cn2-2.natfrp.cloud:12484/";
     public static final String URL_Register = URL + "userRegister.aspx";
     public static final String URL_Login = URL + "userLogin.aspx";
 

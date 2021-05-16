@@ -2,4 +2,5 @@
     <string name="app_name">android-multiple-infowindows</string>
     <string name="password">password</string>
     <string name="username">username</string>
+    <string name="URL">http://us-la-cn2-2.natfrp.cloud:12484/</string>
 </resources>

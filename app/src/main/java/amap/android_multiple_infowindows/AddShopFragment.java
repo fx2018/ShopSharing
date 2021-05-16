@@ -37,7 +37,7 @@ public class AddShopFragment extends Fragment{
     //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
     //public static final String URL = "http://192.168.31.158:8080/ServLetTest/";
     //public static final String URL_ShopRegister = URL + "shopRegisterServlet";
-    public static final String URL = "http://us-la-cn2.sakurafrp.com:12484/";
+    public static final String URL = "http://us-la-cn2-2.natfrp.cloud:12484/";
     public static final String URL_recShopData = URL + "recShopData.aspx";
     //public static final String URL_Login = URL + "loginServlet";
 

@@ -20,7 +20,7 @@ public class UserFragment extends Fragment {
     public static Boolean isLogIn = false;
     public View m_view;
     //public static final String URL = "http://192.168.43.75:8080/ServLetTest/";
-    public static final String URL = "http://us-la-cn2.sakurafrp.com:12484/";
+    public static final String URL = "http://us-la-cn2-2.natfrp.cloud:12484/";
     public static final String URL_Register = URL + "userRegister.aspx";
     public static final String URL_Login = URL + "userLogin.aspx";
     public String username = "";
