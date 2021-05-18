@@ -1,16 +1,19 @@
 package amap.android_multiple_infowindows;
 
+import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.Toast;
 
 
 public class ShopDetailsActivity extends AppCompatActivity {
@@ -63,6 +66,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
             }
         });
 
+        /*
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -82,6 +86,43 @@ public class ShopDetailsActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
 
         loadURI(uri);
+
+         */
+
+        //int currentapiVersion=android.os.Build.VERSION.SDK_INT;
+        //if(currentapiVersion>=21){
+            setWebView1();
+        //}else {
+       //     setWebView2();
+        //}
+        webView.getSettings().setJavaScriptEnabled(true);
+    }
+    private void setWebView2() {
+        webView = (WebView) findViewById(R.id.webview);
+        webView.setWebViewClient(new WebViewClient() {
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                //handler.cancel(); // Android默认的处理方式
+                handler.proceed();  // 接受所有网站的证书
+                //handleMessage(Message msg); // 进行其他处理
+            }
+        });
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl(uri);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setWebView1(){
+        webView = (WebView) findViewById(R.id.webview);
+        webView.setWebViewClient(new WebViewClient() {
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                //handler.cancel(); // Android默认的处理方式
+                handler.proceed();  // 接受所有网站的证书
+                //handleMessage(Message msg); // 进行其他处理
+            }
+        });
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        webView.loadUrl(uri);
     }
 
     public void getLocDataToNavi()
